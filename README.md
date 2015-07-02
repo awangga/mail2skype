@@ -13,7 +13,7 @@ Instalation :
  5. Open main.py edit #change to your gmail account and password
 
 Run :
- 1. python2.6 main.py if you run in 64 bit use : arch -i386 python2.6
+ 1. python2.6 main.py if you run in 64 bit use : arch -i386 python2.6 main.py
  2. add it to your crontab for running per minutes
  3. please keep Skype Client running and login in.
 
