@@ -8,6 +8,7 @@ Instalation :
 Library :
  * https://github.com/awahlig/skype4py
  * https://pypi.python.org/pypi/Skype4Py/
+
 Thanks to :
  * http://stackoverflow.com/questions/2088569/how-do-i-force-python-to-be-32-bit-on-snow-leopard-and-other-32-bit-64-bit-quest
  * http://stackoverflow.com/questions/4536146/need-an-python-script-that-uses-skype4py-to-send-an-instant-message
