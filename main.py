@@ -6,11 +6,13 @@ skype = Skype4Py.Skype()
 skype.Attach()
 
 g = Gmail()
-g.login('sms@kitaklik.com','rollygantengsekali')
-unread = g.inbox().mail(unread=True, sender="awg@kitaklik.com")
+#change to your gmail account and password
+g.login('yourgmail@gmail.com','yourpassword')
+
+unread = g.inbox().mail(unread=True)
 try:
 	unread[0].fetch()
-	nomor = unread[0].subject.split('+')[1]
+	nomor = unread[0].subject
 	pesan = unread[0].body.split('#')[0]
 	print nomor
 	print pesan
