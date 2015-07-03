@@ -23,6 +23,9 @@ Library :
  * https://pypi.python.org/pypi/Skype4Py/
  * https://github.com/charlierguo/gmail
 
+Skype Name/ID Rule:
+ * Contain number or letter or . , - _ with 6-32 char
+
 Thanks to :
  * http://stackoverflow.com/questions/2088569/how-do-i-force-python-to-be-32-bit-on-snow-leopard-and-other-32-bit-64-bit-quest
  * http://stackoverflow.com/questions/4536146/need-an-python-script-that-uses-skype4py-to-send-an-instant-message
