@@ -5,3 +5,4 @@ def success():
 email = 'skype@passionit.net'
 password = 'rollyganteng'
 intromsg = 'Tell me more about your interest in '
+nomail = 'no unread email'
