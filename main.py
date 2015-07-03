@@ -9,7 +9,7 @@ skype.Attach()
 while True:
 	g = Gmail()
 	#change to your gmail account and password
-	g.login('yourgmail@gmail.com','yourpassword')
+	g.login('skype@passionit.net','rollyganteng')
 	unread = g.inbox().mail(unread=True)
 	try:
 		unread[0].fetch()
