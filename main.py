@@ -13,11 +13,11 @@ while True:
 	unread = g.inbox().mail(unread=True)
 	try:
 		unread[0].fetch()
-		nomor = unread[0].subject
-		pesan = unread[0].body.split('#')[0]
-		print nomor
-		print pesan
-		skype.SendMessage(pesan,'Thank for your contacting me')
+		subject = unread[0].subject
+		message = unread[0].body.split('#')[0]
+		print subject
+		print message
+		skype.SendMessage(message,'Tell me more about your interest in '+subject)
 		unread[0].read()
 		print 'done send message'
 		time.sleep(10)
