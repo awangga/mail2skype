@@ -2,14 +2,14 @@
 import Skype4Py
 from gmail import Gmail
 import time
+import config
 
 skype = Skype4Py.Skype()
 skype.Attach()
 
 while True:
 	g = Gmail()
-	#change to your gmail account and password
-	g.login('skype@passionit.net','rollyganteng')
+	g.login(config.email,config.password)
 	unread = g.inbox().mail(unread=True)
 	try:
 		unread[0].fetch()
@@ -17,9 +17,9 @@ while True:
 		message = unread[0].body.split('#')[0]
 		print subject
 		print message
-		skype.SendMessage(message,'Tell me more about your interest in '+subject)
+		skype.SendMessage(message,config.intromsg+subject)
 		unread[0].read()
-		print 'done send message'
+		config.success()
 		time.sleep(10)
 	except IndexError:
 		print "no unread email"
