@@ -1,5 +1,5 @@
 # mail2skype
-Add skype contact(by send chat message) from email inbox body.
+Add skype contact(by send chat message) from email inbox body. Tested on Mac OSX Lion.
 
 How It Works :
  1. Send email to your gmail account with any subject with body only skype id wnd with #, example : awangga.net#
@@ -13,9 +13,10 @@ Instalation :
  5. Open main.py edit #change to your gmail account and password
 
 Run :
- 1. python2.6 main.py if you run in 64 bit use : arch -i386 python2.6 main.py
- 2. add it to your crontab for running per minutes
- 3. please keep Skype Client running and login in.
+ 1. Open and Login to your skype client apps
+ 2. Open terminal and navigate to mail2skype directory
+ 3.	run command : python2.6 main.py ,if you run in 64 bit use : arch -i386 python2.6 main.py
+ 4. please keep Skype Client running and login in, beside terminal.
 
 Library :
  * https://github.com/awahlig/skype4py
