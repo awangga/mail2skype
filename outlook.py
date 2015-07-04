@@ -28,7 +28,7 @@ while True:
 		else:
 			print config.noword
 		time.sleep(10)
-	except IndexError:
+	except:
 		print config.nomail
 		time.sleep(10)
 
