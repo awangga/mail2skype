@@ -44,9 +44,11 @@ class Live():
 		if self.email_message.is_multipart():
 			for payload in self.email_message.get_payload():
 				# if payload.is_multipart(): ...
-				return payload.get_payload()
+				body = payload.get_payload().split(self.email_message['from'])[0].split('\r\n\r\n2015')[0]
+				return body
 		else:
-			return self.email_message.get_payload()
+			body = self.email_message.get_payload().split(self.email_message['from'])[0].split('\r\n\r\n2015')[0]
+			return body
 
 	def mailsubject(self):
 		return self.email_message['Subject']		
