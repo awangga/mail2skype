@@ -7,16 +7,18 @@ How It Works :
 
 Instalation :
  1. Please run and Login into your Skype Client
- 2. enter terminal and run python runmefist.py
- 3. if you in 64 bit version of mac osx please run : arch -i386 python2.6 runmefirst.py
- 4. Open dialog on Skype Client, PLease Allow and alwasy remember Skype4Py to connect to your Skype Apps
- 5. Open main.py edit #change to your gmail account and password
+ 2. open end edit config.py with your email username and password
+ 3. enter terminal and run python runmefist.py
+ 4. if you in 64 bit version of mac osx please run : arch -i386 python2.6 runmefirst.py
+ 5. A dialog open from Skype Client, PLease Allow and always remember Skype4Py to connect to your Skype
+ 6. For gmail account please run : arch -i386 python2.6 main.py
+ 7. For live,hotmail,outlook, any microsoft email account please run : arch -i386 python2.6 outlook.py
 
 Run :
  1. Open and Login to your skype client apps
  2. Open terminal and navigate to mail2skype directory
- 3.	run command : python2.6 main.py ,if you run in 64 bit use : arch -i386 python2.6 main.py
- 4. please keep Skype Client running and login in, beside terminal.
+ 3.	For gmail account, run command : python2.6 main.py ,if you run in 64 bit use : arch -i386 python2.6 main.py
+ 4. For outlook account, run command : python2.6 outlook.py ,if you run in 64 bit use : arch -i386 python2.6 outlook.py
 
 Library :
  * https://github.com/awahlig/skype4py
