@@ -5,10 +5,10 @@ class Live():
 	def __init__(self):
 		import imaplib
 		
-	def login(self):
+	def login(self,username,password):
 	    while True:
 			self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
-			r, d = self.imap.login('rollyawangga@outlook.com', 'Mambono5')
+			r, d = self.imap.login(username, password)
 			assert r == 'OK', 'login failed'
 			try:
 				print "Connected as ",d
