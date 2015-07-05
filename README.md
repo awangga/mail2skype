@@ -2,7 +2,7 @@
 Add skype contact(by send chat message) from email inbox body. Tested on Mac OSX Lion.
 
 How It Works :
- 1. Send email to your gmail account with any subject with body information about your skype ID.
+ 1. Send email to your email account with any subject with body information about your skype ID.
  2. Apps will read unread email and parsing email body then send chat message to it
 
 Instalation :
