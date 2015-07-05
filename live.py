@@ -12,7 +12,7 @@ class Live():
 			assert r == 'OK', 'login failed'
 			try:
 				print "Connected as ",d
-			except self.imap.abort, e:
+			except:
 				print "not connected"
 				continue
 			#self.imap.logout()
