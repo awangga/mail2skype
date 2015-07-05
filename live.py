@@ -28,6 +28,9 @@ class Live():
 	def inbox(self):
 		return self.imap.select("Inbox")
 	
+	def junk(self):
+		return self.imap.select("Junk")
+	
 	def logout(self):
 		return self.imap.logout()
 		
