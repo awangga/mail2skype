@@ -11,7 +11,7 @@ skype.Attach()
 while True:
 	print config.checkinbox
 	mail = live.Live()
-	mail.login()
+	mail.login(config.outlook_email,config.outlook_password)
 	mail.inbox()
 	try:
 		mail.unread()
@@ -34,7 +34,7 @@ while True:
 		time.sleep(10)
 	print config.checkjunk
 	mail = live.Live()
-	mail.login()
+	mail.login(config.outlook_email,config.outlook_password)
 	mail.junk()
 	try:
 		mail.unread()
