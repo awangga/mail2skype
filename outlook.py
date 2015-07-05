@@ -7,10 +7,10 @@ import parser
 
 skype = Skype4Py.Skype()
 skype.Attach()
-mail = live.Live()
 
 while True:
 	print config.checkinbox
+	mail = live.Live()
 	mail.login()
 	mail.inbox()
 	try:
@@ -33,6 +33,7 @@ while True:
 		print config.nomail
 		time.sleep(10)
 	print config.checkjunk
+	mail = live.Live()
 	mail.login()
 	mail.junk()
 	try:
