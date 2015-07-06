@@ -22,7 +22,7 @@ while True:
 		print skypeidarr
 		i = 0
 		while i < len(skypeidarr):
-			skype.SendMessage(skypeidarr[i],config.intromsg+message+subject)
+			skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
 			i += 1
 		config.success()
 		time.sleep(10)
