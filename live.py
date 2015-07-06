@@ -52,6 +52,14 @@ class Live():
 		self.email_message = email.message_from_string(self.raw_email)
 		return self.email_message
 		
+	def rawRead(self):
+		r, d = self.imap.search(None, "SEEN")
+		list = d[0].split(' ')
+		latest_id = list[-1]
+		r, d = self.imap.fetch(latest_id, "(RFC822)")
+		self.raw_email = d[0][1]
+		return self.raw_email
+		
 	def mailbody(self):
 		if self.email_message.is_multipart():
 			for payload in self.email_message.get_payload():
