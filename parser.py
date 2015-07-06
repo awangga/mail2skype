@@ -18,7 +18,7 @@ def getSkype(str):
 			elif hasComma(istr):
 				stack.append(istr)
 	if stack == []:
-		stack.append(arrstr[-1])
+		stack = arrstr
 	return stack
 
 def get6to32char(arrstr):
