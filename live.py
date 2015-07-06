@@ -12,7 +12,7 @@ class Live():
 			assert r == 'OK', 'login failed'
 			try:
 				print "Connected as ",d
-			except:
+			except SocketError as e:
 				print "not connected"
 				continue
 			#self.imap.logout()
@@ -43,6 +43,15 @@ class Live():
 		self.email_message = email.message_from_string(self.raw_email)
 		return self.email_message
 	
+	def read(self):
+		r, d = self.imap.search(None, "SEEN")
+		list = d[0].split(' ')
+		latest_id = list[-1]
+		r, d = self.imap.fetch(latest_id, "(RFC822)")
+		self.raw_email = d[0][1]
+		self.email_message = email.message_from_string(self.raw_email)
+		return self.email_message
+		
 	def mailbody(self):
 		if self.email_message.is_multipart():
 			for payload in self.email_message.get_payload():

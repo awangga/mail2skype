@@ -1,13 +1,53 @@
 #!/usr/bin/python2.6
-def skypeid(str):
+def getSkype(str):
+	stack = []
+	arrstr = getSplit(str)
+	arrstr = get6to32char(arrstr)
+	if len(arrstr) == 1:
+		stack.append(arrstr[0])
+	else:
+		for istr in arrstr:
+			if hasNumbers(istr):
+				stack.append(istr)
+			elif hasDot(istr):
+				stack.append(istr)
+			elif hasDash(istr):
+				stack.append(istr)
+			elif hasUnderscore(istr):
+				stack.append(istr)
+			elif hasComma(istr):
+				stack.append(istr)
+	if stack == []:
+		stack.append(arrstr[-1])
+	return stack
+
+def get6to32char(arrstr):
     stack = []
     i = 0
-    str = str.replace('\r\n',' ').split(' ')
-    while i < len(str):
-    	if len(str[i]) >= 6:
-    		stack.append(str[i])
+    while i < len(arrstr):
+    	if (len(arrstr[i]) >= 6 and len(arrstr[i]) <= 32):
+    		stack.append(arrstr[i])
     	i += 1
     return stack
+
+def getSplit(str):
+	return str.split('--')[0].replace('\r\n',' ').split(' ')
+
+def hasDot(str):
+    return '.' in str
+
+def hasComma(str):
+    return ',' in str
+
+def hasDash(str):
+    return '-' in str
+    
+def hasUnderscore(str):
+    return '_' in str
+
+def hasNumbers(str):
+	return any(char.isdigit() for char in str)
+
 
 # this is just a variable
 tangerine = "Living reflection of a dream"

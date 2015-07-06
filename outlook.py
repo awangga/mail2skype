@@ -17,17 +17,14 @@ while True:
 		mail.unread()
 		subject = mail.mailsubject()
 		message = mail.mailbody()
-		if 'skype' in message.lower():
-			skypeidarr = parser.skypeid(message)
-			print subject
-			print skypeidarr
-			i = 0
-			while i < len(skypeidarr):
-				skype.SendMessage(skypeidarr[i],config.intromsg+subject)
-				i += 1
-			config.success()
-		else:
-			print config.noword
+		skypeidarr = parser.getSkype(message)
+		print subject
+		print skypeidarr
+		i = 0
+		while i < len(skypeidarr):
+			skype.SendMessage(skypeidarr[i],config.intromsg+subject)
+			i += 1
+		config.success()
 		time.sleep(10)
 	except:
 		print config.nomail
