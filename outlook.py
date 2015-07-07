@@ -25,7 +25,11 @@ while True:
 			skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
 			i += 1
 		config.success()
-		sendEmail(mail.mailfrom(),"Re : "+subject,config.replymessage)
+		print "sending reply message..."
+		print "to :"+mail.mailfrom().split('>')[0].split('<')[1]
+		print "subject : "+subject
+		print "content : "+config.replymessage
+		mail.sendEmail(mail.mailfrom().split('>')[0].split('<')[1],"Re : "+subject,config.replymessage)
 		time.sleep(10)
 	except:
 		print config.nomail

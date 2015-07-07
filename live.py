@@ -5,7 +5,7 @@ import smtplib
 class Live():
 	def __init__(self):
 		self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
-		self.smtp = smtplib.SMTP("smtp-mail.outlook.com", 587)
+		self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
 		
 	def login(self,username,password):
 	    self.username = username
@@ -30,7 +30,7 @@ class Live():
 			self.smtp.login(self.username, self.password)
 			self.smtp.sendmail(self.username, recipient, content)
 			print "email replied"
-		except SMTPException:
+		except smtplib.SMTPException:
 			print "Error: unable to send email"
 
 			
