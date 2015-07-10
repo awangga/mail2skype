@@ -1,9 +1,12 @@
 import imaplib
 import email
 import smtplib
+import datetime
 
 class Live():
 	def __init__(self):
+		mydate = datetime.datetime.now()
+		self.today = mydate.strftime("%d-%b-%Y")
 		self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
 		self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
 		
@@ -49,6 +52,34 @@ class Live():
 	
 	def logout(self):
 		return self.imap.logout()
+		
+	def today(self):
+		mydate = datetime.datetime.now()
+		return mydate.strftime("%d-%b-%Y")
+		
+	def readToday(self):
+		r, d = self.imap.search(None,'(SINCE "'+self.today+'")', 'SEEN')
+		list = d[0].split(' ')
+		latest_id = list[-1]
+		r, d = self.imap.fetch(latest_id, "(RFC822)")
+		self.raw_email = d[0][1]
+		self.email_message = email.message_from_string(self.raw_email)
+		return self.email_message
+	
+	def unreadToday(self):
+		r, d = self.imap.search(None,'(SINCE "'+self.today+'")', 'UNSEEN')
+		list = d[0].split(' ')
+		latest_id = list[-1]
+		r, d = self.imap.fetch(latest_id, "(RFC822)")
+		self.raw_email = d[0][1]
+		self.email_message = email.message_from_string(self.raw_email)
+		return self.email_message
+		
+	def readOnly(self,folder):
+		return self.imap.select(folder,readonly=True)
+	
+	def writeEnable(self,folder):
+		return self.imap.select(folder,readonly=False)
 		
 	def unread(self):
 		r, d = self.imap.search(None, "UNSEEN")
