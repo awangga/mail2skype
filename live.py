@@ -57,9 +57,44 @@ class Live():
 		mydate = datetime.datetime.now()
 		return mydate.strftime("%d-%b-%Y")
 		
-	def readToday(self):
+	def unreadIdsToday(self):
+		r, d = self.imap.search(None,'(SINCE "'+self.today+'")', 'UNSEEN')
+		list = d[0].split(' ')
+		return list
+		
+	def unreadIds(self):
+		r, d = self.imap.search(None, "UNSEEN")
+		list = d[0].split(' ')
+		return list
+		
+	def readIdsToday(self):
 		r, d = self.imap.search(None,'(SINCE "'+self.today+'")', 'SEEN')
 		list = d[0].split(' ')
+		return list
+		
+	def readIds(self):
+		r, d = self.imap.search(None, "SEEN")
+		list = d[0].split(' ')
+		return list
+		
+	def unread(self):
+		list = self.unreadIds()
+		latest_id = list[-1]
+		r, d = self.imap.fetch(latest_id, "(RFC822)")
+		self.raw_email = d[0][1]
+		self.email_message = email.message_from_string(self.raw_email)
+		return self.email_message
+	
+	def read(self):
+		list = self.readIds()
+		latest_id = list[-1]
+		r, d = self.imap.fetch(latest_id, "(RFC822)")
+		self.raw_email = d[0][1]
+		self.email_message = email.message_from_string(self.raw_email)
+		return self.email_message
+		
+	def readToday(self):
+		list = self.readIdsToday()
 		latest_id = list[-1]
 		r, d = self.imap.fetch(latest_id, "(RFC822)")
 		self.raw_email = d[0][1]
@@ -67,8 +102,7 @@ class Live():
 		return self.email_message
 	
 	def unreadToday(self):
-		r, d = self.imap.search(None,'(SINCE "'+self.today+'")', 'UNSEEN')
-		list = d[0].split(' ')
+		list = self.unreadIdsToday()
 		latest_id = list[-1]
 		r, d = self.imap.fetch(latest_id, "(RFC822)")
 		self.raw_email = d[0][1]
@@ -80,25 +114,7 @@ class Live():
 	
 	def writeEnable(self,folder):
 		return self.imap.select(folder,readonly=False)
-		
-	def unread(self):
-		r, d = self.imap.search(None, "UNSEEN")
-		list = d[0].split(' ')
-		latest_id = list[-1]
-		r, d = self.imap.fetch(latest_id, "(RFC822)")
-		self.raw_email = d[0][1]
-		self.email_message = email.message_from_string(self.raw_email)
-		return self.email_message
-	
-	def read(self):
-		r, d = self.imap.search(None, "SEEN")
-		list = d[0].split(' ')
-		latest_id = list[-1]
-		r, d = self.imap.fetch(latest_id, "(RFC822)")
-		self.raw_email = d[0][1]
-		self.email_message = email.message_from_string(self.raw_email)
-		return self.email_message
-		
+				
 	def rawRead(self):
 		r, d = self.imap.search(None, "SEEN")
 		list = d[0].split(' ')
