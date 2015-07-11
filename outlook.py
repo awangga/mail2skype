@@ -1,59 +1,146 @@
-#!/usr/bin/python2.6
-import Skype4Py
-import live
-import time
-import config
-import parser
+import imaplib
+import email
+import smtplib
+import datetime
 
-skype = Skype4Py.Skype()
-skype.Attach()
+class Outlook():
+	def __init__(self):
+		mydate = datetime.datetime.now()
+		self.today = mydate.strftime("%d-%b-%Y")
+		self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
+		self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
+		
+	def login(self,username,password):
+	    self.username = username
+	    self.password = password
+	    while True:
+			r, d = self.imap.login(username, password)
+			assert r == 'OK', 'login failed'
+			try:
+				print "Connected as ",d
+			except SocketError as e:
+				print "not connected"
+				continue
+			#self.imap.logout()
+			break
+	
+	def sendEmail(self,recipient,subject,message):
+		headers = "\r\n".join(["from: " + "sms@kitaklik.com","subject: " + subject,"to: " + recipient,"mime-version: 1.0","content-type: text/html"])
+		content = headers + "\r\n\r\n" + message
+		try:
+			self.smtp.ehlo()
+			self.smtp.starttls()
+			self.smtp.login(self.username, self.password)
+			self.smtp.sendmail(self.username, recipient, content)
+			print "email replied"
+		except smtplib.SMTPException:
+			print "Error: unable to send email"
 
-def checkingFolder(folder):
-	mail = live.Live()
-	mail.login(config.outlook_email,config.outlook_password)
-	mail.readOnly(folder)
-	print "  Looking Up "+folder
-	try:
-		unread_ids_today = mail.unreadIdsToday()
-		print "   unread email ids today : "
-		print unread_ids_today
-		unread_ids_with_word = mail.getIdswithWord(unread_ids_today,'skype id')
-		print "   unread email ids with word Skype ID today : "
-		print unread_ids_with_word
-	except:
-		print config.nomail
-	#fetch Inbox folder
-	mail = live.Live()
-	mail.login(config.outlook_email,config.outlook_password)
-	mail.select(folder)
-	try:
-		for id_w_word in unread_ids_with_word:
-			mail.getEmail(id_w_word)
-			subject = mail.mailsubject()
-			message = mail.mailbody()
-			skypeidarr = parser.getSkype(message)
-			print subject
-			print skypeidarr
-			i = 0
-			while i < len(skypeidarr):
-				skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
-				i += 1
-			config.success()
-			print "  sending reply message..."
-			print "  to :"+mail.mailfrom().split('>')[0].split('<')[1]
-			print "  subject : "+subject
-			print "  content : "+config.replymessage
-			mail.sendEmail(mail.mailfrom().split('>')[0].split('<')[1],"Re : "+subject,config.replymessage)
-			time.sleep(10)
-	except:
-		print config.noword
-		time.sleep(10)
+			
+	def list(self):
+		#self.login()
+		return self.imap.list()
+	
+	def select(self,str):
+		return self.imap.select(str)
+		
+	def inbox(self):
+		return self.imap.select("Inbox")
+	
+	def junk(self):
+		return self.imap.select("Junk")
+	
+	def logout(self):
+		return self.imap.logout()
+		
+	def today(self):
+		mydate = datetime.datetime.now()
+		return mydate.strftime("%d-%b-%Y")
+		
+	def unreadIdsToday(self):
+		r, d = self.imap.search(None,'(SINCE "'+self.today+'")', 'UNSEEN')
+		list = d[0].split(' ')
+		return list
+		
+	def getIdswithWord(self,ids,word):
+		stack = []
+		for id in ids:
+			self.getEmail(id)
+			curr_mailmsg = self.mailbody()
+			if word in self.mailbody().lower():
+				stack.append(id)
+		return stack
+		
+	def unreadIds(self):
+		r, d = self.imap.search(None, "UNSEEN")
+		list = d[0].split(' ')
+		return list
+		
+	def readIdsToday(self):
+		r, d = self.imap.search(None,'(SINCE "'+self.today+'")', 'SEEN')
+		list = d[0].split(' ')
+		return list
+		
+	def readIds(self):
+		r, d = self.imap.search(None, "SEEN")
+		list = d[0].split(' ')
+		return list
+		
+	def getEmail(self,id):
+		r, d = self.imap.fetch(id, "(RFC822)")
+		self.raw_email = d[0][1]
+		self.email_message = email.message_from_string(self.raw_email)
+		return self.email_message
+		
+	def unread(self):
+		list = self.unreadIds()
+		latest_id = list[-1]
+		return self.getEmail(latest_id)
+	
+	def read(self):
+		list = self.readIds()
+		latest_id = list[-1]
+		return self.getEmail(latest_id)
+		
+	def readToday(self):
+		list = self.readIdsToday()
+		latest_id = list[-1]
+		return self.getEmail(latest_id)
+	
+	def unreadToday(self):
+		list = self.unreadIdsToday()
+		latest_id = list[-1]
+		return self.getEmail(latest_id)
+		
+	def readOnly(self,folder):
+		return self.imap.select(folder,readonly=True)
+	
+	def writeEnable(self,folder):
+		return self.imap.select(folder,readonly=False)
+				
+	def rawRead(self):
+		list = self.readIds()
+		latest_id = list[-1]
+		r, d = self.imap.fetch(latest_id, "(RFC822)")
+		self.raw_email = d[0][1]
+		return self.raw_email
+		
+	def mailbody(self):
+		if self.email_message.is_multipart():
+			for payload in self.email_message.get_payload():
+				# if payload.is_multipart(): ...
+				body = payload.get_payload().split(self.email_message['from'])[0].split('\r\n\r\n2015')[0]
+				return body
+		else:
+			body = self.email_message.get_payload().split(self.email_message['from'])[0].split('\r\n\r\n2015')[0]
+			return body
 
-
-while True:
-	#checking ids in Inbox Folder
-	print config.checkinbox
-	checkingFolder('Inbox')
-	#checking Junk Folder
-	print config.checkjunk
-	checkingFolder('Junk')
+	def mailsubject(self):
+		return self.email_message['Subject']		
+		
+	def mailfrom(self):
+		return self.email_message['from']
+		
+	def mailto(self):
+		return self.email_message['to']
+		
