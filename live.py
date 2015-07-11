@@ -77,37 +77,31 @@ class Live():
 		list = d[0].split(' ')
 		return list
 		
-	def unread(self):
-		list = self.unreadIds()
-		latest_id = list[-1]
-		r, d = self.imap.fetch(latest_id, "(RFC822)")
-		self.raw_email = d[0][1]
-		self.email_message = email.message_from_string(self.raw_email)
-		return self.email_message
-	
-	def read(self):
-		list = self.readIds()
-		latest_id = list[-1]
-		r, d = self.imap.fetch(latest_id, "(RFC822)")
+	def getEmail(self,id):
+		r, d = self.imap.fetch(id, "(RFC822)")
 		self.raw_email = d[0][1]
 		self.email_message = email.message_from_string(self.raw_email)
 		return self.email_message
 		
+	def unread(self):
+		list = self.unreadIds()
+		latest_id = list[-1]
+		return self.getEmail(latest_id)
+	
+	def read(self):
+		list = self.readIds()
+		latest_id = list[-1]
+		return self.getEmail(latest_id)
+		
 	def readToday(self):
 		list = self.readIdsToday()
 		latest_id = list[-1]
-		r, d = self.imap.fetch(latest_id, "(RFC822)")
-		self.raw_email = d[0][1]
-		self.email_message = email.message_from_string(self.raw_email)
-		return self.email_message
+		return self.getEmail(latest_id)
 	
 	def unreadToday(self):
 		list = self.unreadIdsToday()
 		latest_id = list[-1]
-		r, d = self.imap.fetch(latest_id, "(RFC822)")
-		self.raw_email = d[0][1]
-		self.email_message = email.message_from_string(self.raw_email)
-		return self.email_message
+		return self.getEmail(latest_id)
 		
 	def readOnly(self,folder):
 		return self.imap.select(folder,readonly=True)
@@ -116,8 +110,7 @@ class Live():
 		return self.imap.select(folder,readonly=False)
 				
 	def rawRead(self):
-		r, d = self.imap.search(None, "SEEN")
-		list = d[0].split(' ')
+		list = self.readIds()
 		latest_id = list[-1]
 		r, d = self.imap.fetch(latest_id, "(RFC822)")
 		self.raw_email = d[0][1]
