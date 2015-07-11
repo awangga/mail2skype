@@ -62,6 +62,15 @@ class Live():
 		list = d[0].split(' ')
 		return list
 		
+	def getIdswithWord(self,ids,word):
+		stack = []
+		for id in ids:
+			self.getEmail(id)
+			curr_mailmsg = self.mailbody()
+			if word in self.mailbody().lower():
+				stack.append(id)
+		return stack
+		
 	def unreadIds(self):
 		r, d = self.imap.search(None, "UNSEEN")
 		list = d[0].split(' ')
@@ -82,15 +91,6 @@ class Live():
 		self.raw_email = d[0][1]
 		self.email_message = email.message_from_string(self.raw_email)
 		return self.email_message
-		
-	def getIdswithWord(self,ids,word):
-		stack = []
-		for id in ids:
-			self.getEmail(id)
-			curr_mailmsg = self.mailbody()
-			if word in self.mailbody().lower():
-				stack.append(id)
-		return stack
 		
 	def unread(self):
 		list = self.unreadIds()

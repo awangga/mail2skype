@@ -12,9 +12,14 @@ def checkingFolder(folder):
 	mail = live.Live()
 	mail.login(config.outlook_email,config.outlook_password)
 	mail.readOnly(folder)
+	print "  Looking Up "+folder
 	try:
 		unread_ids_today = mail.unreadIdsToday()
-		unread_ids_with_word = getIdswithWord(unread_ids_today,'skype id')
+		print "   unread email ids today : "
+		print unread_ids_today
+		unread_ids_with_word = mail.getIdswithWord(unread_ids_today,'skype id')
+		print "   unread email ids with word Skype ID today : "
+		print unread_ids_with_word
 	except:
 		print config.nomail
 	#fetch Inbox folder
@@ -34,10 +39,10 @@ def checkingFolder(folder):
 				skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
 				i += 1
 			config.success()
-			print "sending reply message..."
-			print "to :"+mail.mailfrom().split('>')[0].split('<')[1]
-			print "subject : "+subject
-			print "content : "+config.replymessage
+			print "  sending reply message..."
+			print "  to :"+mail.mailfrom().split('>')[0].split('<')[1]
+			print "  subject : "+subject
+			print "  content : "+config.replymessage
 			mail.sendEmail(mail.mailfrom().split('>')[0].split('<')[1],"Re : "+subject,config.replymessage)
 			time.sleep(10)
 	except:
