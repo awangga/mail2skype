@@ -43,7 +43,7 @@ def get6to32char(arrstr):
     return stack
 
 def getSplit(str):
-	return str.split('-- ')[0].replace('\r\n',' ').split(' ')
+	return str.split('-- ')[0].split('\r\nOn ')[0].replace('\r\n',' ').split(' ')
 
 def hasDot(str):
     return '.' in str
