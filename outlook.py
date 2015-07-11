@@ -8,17 +8,24 @@ import parser
 skype = Skype4Py.Skype()
 skype.Attach()
 
-while True:
-	#checking Inbox Folder
-	print config.checkinbox
+def checkingFolder(folder):
 	mail = live.Live()
 	mail.login(config.outlook_email,config.outlook_password)
-	mail.inbox()
+	mail.readOnly(folder)
 	try:
-		mail.unread()
-		subject = mail.mailsubject()
-		message = mail.mailbody()
-		if 'skype id' in message.lower():
+		unread_ids_today = mail.unreadIdsToday()
+		unread_ids_with_word = getIdswithWord(unread_ids_today,'skype id')
+	except:
+		print config.nomail
+	#fetch Inbox folder
+	mail = live.Live()
+	mail.login(config.outlook_email,config.outlook_password)
+	mail.select(folder)
+	try:
+		for id_w_word in unread_ids_with_word:
+			mail.getEmail(id_w_word)
+			subject = mail.mailsubject()
+			message = mail.mailbody()
 			skypeidarr = parser.getSkype(message)
 			print subject
 			print skypeidarr
@@ -32,38 +39,16 @@ while True:
 			print "subject : "+subject
 			print "content : "+config.replymessage
 			mail.sendEmail(mail.mailfrom().split('>')[0].split('<')[1],"Re : "+subject,config.replymessage)
-		else:
-			print config.noword
-		time.sleep(10)
+			time.sleep(10)
 	except:
-		print config.nomail
+		print config.noword
 		time.sleep(10)
+
+
+while True:
+	#checking ids in Inbox Folder
+	print config.checkinbox
+	checkingFolder('Inbox')
 	#checking Junk Folder
 	print config.checkjunk
-	mail = live.Live()
-	mail.login(config.outlook_email,config.outlook_password)
-	mail.junk()
-	try:
-		mail.unread()
-		subject = mail.mailsubject()
-		message = mail.mailbody()
-		if 'skype id' in message.lower():
-			skypeidarr = parser.getSkype(message)
-			print subject
-			print skypeidarr
-			i = 0
-			while i < len(skypeidarr):
-				skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
-				i += 1
-			config.success()
-			print "sending reply message..."
-			print "to :"+mail.mailfrom().split('>')[0].split('<')[1]
-			print "subject : "+subject
-			print "content : "+config.replymessage
-			mail.sendEmail(mail.mailfrom().split('>')[0].split('<')[1],"Re : "+subject,config.replymessage)
-		else:
-			print config.noword
-		time.sleep(10)
-	except:
-		print config.nomail
-		time.sleep(10)
+	checkingFolder('Junk')

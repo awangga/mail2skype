@@ -83,6 +83,15 @@ class Live():
 		self.email_message = email.message_from_string(self.raw_email)
 		return self.email_message
 		
+	def getIdswithWord(self,ids,word):
+		stack = []
+		for id in ids:
+			self.getEmail(id)
+			curr_mailmsg = self.mailbody()
+			if word in self.mailbody().lower():
+				stack.append(id)
+		return stack
+		
 	def unread(self):
 		list = self.unreadIds()
 		latest_id = list[-1]

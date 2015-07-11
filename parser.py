@@ -21,6 +21,18 @@ def getSkype(str):
 		stack = arrstr
 	return stack
 
+def haveWord(wrd,msg):
+	if wrd in msg.lower():
+		return True
+	else:
+		return False
+
+def sendChats(skypeidarr,intro,subj,msg):
+	i = 0
+	while i < len(skypeidarr):
+		skype.SendMessage(skypeidarr[i],intro+subj+"\r\n with Content : \r\n"+msg)
+		i += 1
+
 def get6to32char(arrstr):
     stack = []
     i = 0
