@@ -19,7 +19,7 @@ class Outlook():
 			assert r == 'OK', 'login failed'
 			try:
 				print "Connected as ",d
-			except SocketError as e:
+			except socket.error, e:
 				print "not connected"
 				continue
 			#self.imap.logout()
