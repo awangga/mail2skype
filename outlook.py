@@ -7,13 +7,14 @@ class Outlook():
 	def __init__(self):
 		mydate = datetime.datetime.now()
 		self.today = mydate.strftime("%d-%b-%Y")
-		self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
+		#self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
 		self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
 		
 	def login(self,username,password):
 	    self.username = username
 	    self.password = password
 	    while True:
+	    	self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
 			r, d = self.imap.login(username, password)
 			assert r == 'OK', 'login failed'
 			try:
