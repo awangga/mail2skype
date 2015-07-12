@@ -2,13 +2,14 @@ import imaplib
 import email
 import smtplib
 import datetime
+import email.mime.multipart
 
 class Outlook():
 	def __init__(self):
 		mydate = datetime.datetime.now()
 		self.today = mydate.strftime("%d-%b-%Y")
 		#self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
-		self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
+		#self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
 		
 	def login(self,username,password):
 	    self.username = username
@@ -26,13 +27,19 @@ class Outlook():
 			break
 	
 	def sendEmail(self,recipient,subject,message):
-		headers = "\r\n".join(["from: " + "sms@kitaklik.com","subject: " + subject,"to: " + recipient,"mime-version: 1.0","content-type: text/html"])
-		content = headers + "\r\n\r\n" + message
+		msg = email.mime.multipart.MIMEMultipart()
+		msg['to'] = recipient
+		msg['from'] = self.username
+		msg['subject'] = subject
+		msg.add_header('reply-to', self.username)
+		#headers = "\r\n".join(["from: " + "sms@kitaklik.com","subject: " + subject,"to: " + recipient,"mime-version: 1.0","content-type: text/html"])
+		#content = headers + "\r\n\r\n" + message
 		try:
+			self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
 			self.smtp.ehlo()
 			self.smtp.starttls()
 			self.smtp.login(self.username, self.password)
-			self.smtp.sendmail(self.username, recipient, content)
+			self.smtp.sendmail(msg['from'], [msg['to']], msg.as_string())
 			print "email replied"
 		except smtplib.SMTPException:
 			print "Error: unable to send email"
