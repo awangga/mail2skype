@@ -14,13 +14,13 @@ class Outlook():
 	    self.username = username
 	    self.password = password
 	    while True:
-			self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
-			r, d = self.imap.login(username, password)
-			assert r == 'OK', 'login failed'
 			try:
+				self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
+				r, d = self.imap.login(username, password)
+				assert r == 'OK', 'login failed'
 				print "Connected as ",d
-			except socket.error, e:
-				print "not connected"
+			except:
+				print "not connected, trying again..."
 				continue
 			#self.imap.logout()
 			break
