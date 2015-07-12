@@ -23,6 +23,7 @@ def checkingFolder(folder):
 	except:
 		print config.nomail
 	#fetch Inbox folder
+	time.sleep(3)
 	mail = outlook.Outlook()
 	mail.login(config.outlook_email,config.outlook_password)
 	mail.select(folder)
