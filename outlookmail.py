@@ -44,10 +44,10 @@ def checkingFolder(folder):
 			print "  subject : "+subject
 			print "  content : "+config.replymessage
 			mail.sendEmail(mail.mailfrom().split('>')[0].split('<')[1],"Re : "+subject,config.replymessage)
-			time.sleep(10)
+			time.sleep(30)
 	except:
 		print config.noword
-		time.sleep(10)
+		time.sleep(30)
 
 
 while True:
