@@ -52,9 +52,13 @@ def checkingFolder(folder):
 
 
 while True:
-	#checking ids in Inbox Folder
-	print config.checkinbox
-	checkingFolder('Inbox')
-	#checking Junk Folder
-	print config.checkjunk
-	checkingFolder('Junk')
+	try:
+		#checking ids in Inbox Folder
+		print config.checkinbox
+		checkingFolder('Inbox')
+		#checking Junk Folder
+		print config.checkjunk
+		checkingFolder('Junk')
+	except:
+		print "Retrying..."
+		continue
