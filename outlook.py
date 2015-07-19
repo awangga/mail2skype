@@ -164,3 +164,12 @@ class Outlook():
 	def mailto(self):
 		return self.email_message['to']
 		
+	def mailreturnpath(self):
+		return self.email_message['Return-Path']
+	
+	def mailreplyto(self):
+		return self.email_message['Reply-To']
+		
+	def mailall(self):
+		return self.email_message
+		
