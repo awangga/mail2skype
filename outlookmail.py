@@ -40,11 +40,15 @@ def checkingFolder(folder):
 				skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
 				i += 1
 			config.success()
+			if mail.mailreplyto():
+				sendto =  mail.mailreplyto()
+			else:
+				sendto = mail.mailfrom().split('>')[0].split('<')[1]
 			print "  sending reply message..."
-			print "  to :"+mail.mailfrom().split('>')[0].split('<')[1]
+			print "  to :"+sendto
 			print "  subject : "+subject
 			print "  content : "+config.replymessage
-			mail.sendEmail(mail.mailfrom().split('>')[0].split('<')[1],"Re : "+subject,config.replymessage)
+			mail.sendEmail(sendto,"Re : "+subject,config.replymessage)
 			time.sleep(3)
 	except:
 		print config.noword
