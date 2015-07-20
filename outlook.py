@@ -19,9 +19,9 @@ class Outlook():
 				self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
 				r, d = self.imap.login(username, password)
 				assert r == 'OK', 'login failed'
-				print "Connected as ",d
+				print "Sign as ",d
 			except:
-				print "not connected, trying again..."
+				print "Sign In ..."
 				continue
 			#self.imap.logout()
 			break
