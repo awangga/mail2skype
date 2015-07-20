@@ -54,7 +54,7 @@ class Outlook():
 				self.smtp.starttls()
 				self.smtp.login(self.username, self.password)
 				self.smtp.sendmail(self.username, recipient, content)
-				print "email replied"
+				print "   email replied"
 			except:
 				print "   Sending email..."
 				continue
