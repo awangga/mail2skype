@@ -18,6 +18,10 @@ def getSkype(str):
 			elif hasComma(istr):
 				stack.append(istr)
 	if stack == []:
+		for istri in arrstr:
+			if not hasSpecialChar(istri):
+				stack.append(istri)
+	if stack == []:
 		stack = arrstr
 	return stack
 
