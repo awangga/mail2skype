@@ -19,9 +19,9 @@ class Outlook():
 				self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
 				r, d = self.imap.login(username, password)
 				assert r == 'OK', 'login failed'
-				print "Sign as ",d
+				print " > Sign as ",d
 			except:
-				print "Sign In ..."
+				print " > Sign In ..."
 				continue
 			#self.imap.logout()
 			break
@@ -47,16 +47,19 @@ class Outlook():
 	def sendEmail(self,recipient,subject,message):
 		headers = "\r\n".join(["from: " + self.username,"subject: " + subject,"to: " + recipient,"mime-version: 1.0","content-type: text/html"])
 		content = headers + "\r\n\r\n" + message
-		try:
-			self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
-			self.smtp.ehlo()
-			self.smtp.starttls()
-			self.smtp.login(self.username, self.password)
-			self.smtp.sendmail(self.username, recipient, content)
-			print "email replied"
-		except smtplib.SMTPException:
-			print "Error: unable to send email"
-			
+		while True:
+			try:
+				self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
+				self.smtp.ehlo()
+				self.smtp.starttls()
+				self.smtp.login(self.username, self.password)
+				self.smtp.sendmail(self.username, recipient, content)
+				print "email replied"
+			except:
+				print "   Sending email..."
+				continue
+			break
+				
 	def list(self):
 		#self.login()
 		return self.imap.list()
