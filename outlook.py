@@ -40,7 +40,7 @@ class Outlook():
 			self.smtp.starttls()
 			self.smtp.login(self.username, self.password)
 			self.smtp.sendmail(msg['from'], [msg['to']], msg.as_string())
-			print "email replied"
+			print "   email replied"
 		except smtplib.SMTPException:
 			print "Error: unable to send email"
 	
