@@ -49,6 +49,7 @@ def checkingFolder(folder):
 			print "  subject : "+subject
 			print "  content : "+config.replymessage
 			mail.sendEmail(sendto,"Re : "+subject,config.replymessage)
+			print "    email sent..."
 			time.sleep(3)
 	except:
 		print config.noword
