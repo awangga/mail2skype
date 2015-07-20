@@ -46,20 +46,48 @@ def getSplit(str):
 	return str.split('-- ')[0].split('\r\nOn ')[0].replace('\r\n',' ').split(' ')
 
 def hasDot(str):
-    return '.' in str
+	if hasSpecialChar(str):
+		return False
+	elif '.' in str:
+		return True
 
 def hasComma(str):
-    return ',' in str
+	if hasSpecialChar(str):
+		return False
+	elif ',' in str:
+		return True
 
 def hasDash(str):
-    return '-' in str
+	if hasSpecialChar(str):
+		return False
+	elif '-' in str:
+		return True
     
 def hasUnderscore(str):
-    return '_' in str
+	if hasSpecialChar(str):
+		return False
+	elif '_' in str:
+		return True
 
 def hasNumbers(str):
 	return any(char.isdigit() for char in str)
 
+def hasSpecialChar(str):
+	if '/' in str:
+		has = True
+	elif '=' in str:
+		has = True
+	elif '--' in str:
+		has = True
+	elif '__' in str:
+		has = True
+	elif str[-1] == '.':
+		has = True
+	elif str[-1] == ',':
+		has = True
+	else:
+		has = False
+	return has
 
 # this is just a variable
 tangerine = "Living reflection of a dream"
