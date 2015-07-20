@@ -6,8 +6,8 @@ import email.mime.multipart
 
 class Outlook():
 	def __init__(self):
-		mydate = datetime.datetime.now()
-		self.today = mydate.strftime("%d-%b-%Y")-datetime.timedelta(1)
+		mydate = datetime.datetime.now()-datetime.timedelta(1)
+		self.today = mydate.strftime("%d-%b-%Y")
 		#self.imap = imaplib.IMAP4_SSL('imap-mail.outlook.com')
 		#self.smtp = smtplib.SMTP('smtp-mail.outlook.com')
 		
