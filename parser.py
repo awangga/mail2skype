@@ -81,6 +81,48 @@ def hasSpecialChar(str):
 		has = True
 	elif '=' in str:
 		has = True
+	elif '@' in str:
+		has = True
+	elif '+' in str:
+		has = True
+	elif '(' in str:
+		has = True
+	elif '[' in str:
+		has = True
+	elif '&' in str:
+		has = True
+	elif '#' in str:
+		has = True
+	elif '$' in str:
+		has = True
+	elif '^' in str:
+		has = True
+	elif ':' in str:
+		has = True
+	elif ';' in str:
+		has = True
+	elif '<' in str:
+		has = True
+	elif '?' in str:
+		has = True
+	elif '{' in str:
+		has = True
+	elif '%' in str:
+		has = True
+	elif '*' in str:
+		has = True
+	elif '~' in str:
+		has = True
+	elif '|' in str:
+		has = True
+	elif ')' in str:
+		has = True
+	elif '}' in str:
+		has = True
+	elif ']' in str:
+		has = True
+	elif '>' in str:
+		has = True
 	elif '--' in str:
 		has = True
 	elif '__' in str:
