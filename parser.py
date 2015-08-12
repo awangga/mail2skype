@@ -25,6 +25,35 @@ def getSkype(str):
 		stack = arrstr
 	return stack
 
+def filterSkype(str):
+	stack = []
+	if hasSpecialChar(str):
+		arrstr = stack
+	else:
+		arrstr = getSplit(str)
+		arrstr = get6to32char(arrstr)
+	if len(arrstr) == 1:
+		stack.append(arrstr[0])
+	else:
+		for istr in arrstr:
+			if hasNumbers(istr):
+				stack.append(istr)
+			elif hasDot(istr):
+				stack.append(istr)
+			elif hasDash(istr):
+				stack.append(istr)
+			elif hasUnderscore(istr):
+				stack.append(istr)
+			elif hasComma(istr):
+				stack.append(istr)
+	if stack == []:
+		for istri in arrstr:
+			if not hasSpecialChar(istri):
+				stack.append(istri)
+	if stack == []:
+		stack = arrstr
+	return stack
+
 def haveWord(wrd,msg):
 	if wrd in msg.lower():
 		return True
@@ -126,10 +155,6 @@ def hasSpecialChar(str):
 	elif '--' in str:
 		has = True
 	elif '__' in str:
-		has = True
-	elif str[-1] == '.':
-		has = True
-	elif str[-1] == ',':
 		has = True
 	else:
 		has = False

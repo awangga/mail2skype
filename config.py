@@ -1,7 +1,14 @@
 def success():
     print "Success to send!"
 
-# this is just a variable
+
+# for csv to skype
+replymessage = 'I was send Skype chat to you'
+filename = 'test.csv'
+delimiter = ';'
+skypecolumn = 4
+
+# for email to skype purpose
 email = 'skype@passionit.net'
 password = 'rollyganteng'
 outlook_email = 'rollyawangga@outlook.com'
@@ -11,4 +18,4 @@ nomail = '   no unread email'
 noword = '   no Skype ID word in email body'
 checkinbox = 'Checking inbox folder'
 checkjunk = 'Checking junk folder'
-replymessage = 'I was send Skype chat to you'
+
