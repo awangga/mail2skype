@@ -11,6 +11,7 @@ skype.Attach()
 
 with open(config.filename, 'rb') as f:
 	reader = csv.reader(f, delimiter=config.delimiter, skipinitialspace=True, quoting=csv.QUOTE_MINIMAL, quotechar=b'"', lineterminator="\n")
+	i = 0
 	for row in reader:
 		#skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
 		skype_id = row[config.skypecolumn]
@@ -18,3 +19,4 @@ with open(config.filename, 'rb') as f:
 		if a:
 			print "send message to : "+a[0]
 			skype.SendMessage(a[0],config.intro)
+			a += 1
