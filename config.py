@@ -3,7 +3,7 @@ def success():
 
 
 # for csv to skype
-replymessage = 'I was send Skype chat to you'
+intro = "hello guys"
 filename = 'test.csv'
 delimiter = ';'
 skypecolumn = 4
@@ -18,4 +18,4 @@ nomail = '   no unread email'
 noword = '   no Skype ID word in email body'
 checkinbox = 'Checking inbox folder'
 checkjunk = 'Checking junk folder'
-
+replymessage = 'I was send Skype chat to you'

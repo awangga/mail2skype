@@ -156,6 +156,12 @@ def hasSpecialChar(str):
 		has = True
 	elif '__' in str:
 		has = True
+	elif '\n' in str:
+		has = True
+	elif '\t' in str:
+		has = True
+	elif '\t2' in str:
+		has = True
 	else:
 		has = False
 	return has

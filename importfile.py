@@ -14,6 +14,7 @@ with open(config.filename, 'rb') as f:
 	for row in reader:
 		#skype.SendMessage(skypeidarr[i],config.intromsg+subject+"\r\n with Content : \r\n"+message)
 		skype_id = row[config.skypecolumn]
-		if skype_id:
-			a = parser.filterSkype(skype_id)
-			print a
+		a = parser.filterSkype(skype_id)
+		if a:
+			print "send message to : "+a[0]
+			skype.SendMessage(a[0],config.intro)
