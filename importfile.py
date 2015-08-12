@@ -19,4 +19,6 @@ with open(config.filename, 'rb') as f:
 		if a:
 			print "send message to : "+a[0]
 			skype.SendMessage(a[0],config.intro)
-			a += 1
+			i += 1
+	print "Total skype account :"
+	print i
